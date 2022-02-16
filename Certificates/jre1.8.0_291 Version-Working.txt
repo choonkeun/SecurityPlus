@@ -1,0 +1,73 @@
+
+https://stackoverflow.com/questions/50928061/certificate-for-localhost-doesnt-match-any-of-the-subject-alternative-names
+https://stackoverflow.com/questions/45224718/javax-net-ssl-sslexception-certificate-for-doesnt-match-any-of-the-subject
+
+----------------------------------------------------------------------------------------------------
+*** WORKING ***
+*** -ext SAN=dns:costgsolr01.xosecurity.org,DNS:localhost,IP:127.0.0.1" : SAN of DNS={{DeviceName}}
+----------------------------------------------------------------------------------------------------
+"C:\Program Files\Java\jre1.8.0_291\bin\keytool.exe"  ^
+-genkeypair  ^
+-alias costgsolr01  ^
+-keyalg RSA  ^
+-keysize 2048  ^
+-keypass secret  ^
+-storepass secret  ^
+-validity 9999  ^
+-keystore costgsolr01.jks  ^
+-ext SAN=dns:costgsolr01.xosecurity.org,dns:costgiis01,dns:sc90.cm.dev.local,dns:localhost,IP:127.0.0.1  ^
+-dname "CN=costgsolr01.xosecurity.org, OU=Organizational Unit, L=Location, ST=State, C=Country"
+
+
+"C:\Program Files\Java\jre1.8.0_291\bin\keytool.exe"  ^
+-importkeystore  ^
+-srckeystore costgsolr01.jks  ^
+-destkeystore costgsolr01.p12  ^
+-srcstoretype jks  ^
+-deststoretype pkcs12  ^
+-srcstorepass secret  ^
+-deststorepass secret 
+----------------------------------------------------------------------------------------------------
+
+--create crt file and import to ROOT folder
+"C:\Program Files\Java\jre1.8.0_291\bin\keytool.exe" ^
+-exportcert  ^
+-alias costgsolr01  ^
+-file costgsolr01.keystore.crt ^
+-keystore costgsolr01.keystore.jks  ^
+-storepass secret
+----------------------------------------------------------------------------------------------------
+
+
+C:\Solr> "C:\Solr\solr-8.1.1\bin\solr.cmd" start -h costgsolr01                -p 8984
+C:\Solr> "C:\Solr\solr-8.1.1\bin\solr.cmd" start -h costgsolr01.xosecurity.org -p 8982
+C:\Solr> "C:\Solr\solr-8.1.1\bin\solr.cmd" stop  -h costgsolr01.xosecurity.org -p 8982
+
+C:\Solr> "C:\Solr\solr-8.1.1\bin\solr.cmd" start -h costgsolr01.xosecurity.org -p 8982
+Java HotSpot(TM) 64-Bit Server VM warning: JVM cannot use large page memory because it does not have enough privilege to lock pages in memory.
+Waiting up to 30 to see Solr running on port 8982
+INFO  - 2022-02-09 17:43:00.205; org.apache.solr.util.configuration.SSLConfigurations; Setting javax.net.ssl.keyStorePassword
+INFO  - 2022-02-09 17:43:00.206; org.apache.solr.util.configuration.SSLConfigurations; Setting javax.net.ssl.trustStorePassword
+Started Solr server on port 8982. Happy searching!
+
+C:\Solr>
+https://localhost:8982/solr/#/                       --Working
+https://costgsolr01.xosecurity.org:8982/solr/#/      --Working
+
+----------------------------------------------------------------------------------------------------
+
+"C:\Program Files\OpenSSL-Win64\bin\openssl.exe" pkcs12  ^
+-in C:\Solr\costgsolr01.p12  ^
+-out C:\Solr\costgsolr01.pem  ^
+-nodes
+Enter Import Password: secret
+
+Error outputting keys and certificates
+DC110000:error:0308010C:digital envelope routines:inner_evp_generic_fetch:unsupported:crypto\evp\evp_fetch.c:349:Global default library context, Algorithm (RC2-40-CBC : 0), Properties ()
+
+--> jre1.8.0_291 version could not convert to pem file but jre1.8.0_321 version has no problem
+--> This means 291 and 321 version algorhm is different but 291 version can import to ROOT without Private key error
+
+
+
+

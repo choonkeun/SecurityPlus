@@ -1,0 +1,41 @@
+PS R:\>     Help New-SelfSignedCertificate
+PS R:\> Get-Help New-SelfSignedCertificate
+
+NAME
+    New-SelfSignedCertificate
+    
+SYNTAX
+    New-SelfSignedCertificate [-SecurityDescriptor <FileSecurity>] [-TextExtension <string[]>] [-Extension 
+    <X509Extension[]>] [-HardwareKeyUsage {None | SignatureKey | EncryptionKey | GenericKey | StorageKey | 
+    IdentityKey}] [-KeyUsageProperty {None | Decrypt | Sign | KeyAgreement | All}] [-KeyUsage {None | 
+    EncipherOnly | CRLSign | CertSign | KeyAgreement | DataEncipherment | KeyEncipherment | NonRepudiation 
+    | DigitalSignature | DecipherOnly}] [-KeyProtection {None | Protect | ProtectHigh | 
+    ProtectFingerPrint}] [-KeyExportPolicy {NonExportable | ExportableEncrypted | Exportable}] [-KeyLength 
+    <int>] [-KeyAlgorithm <string>] [-SmimeCapabilities] [-ExistingKey] [-KeyLocation <string>] 
+    [-SignerReader <string>] [-Reader <string>] [-SignerPin <securestring>] [-Pin <securestring>] 
+    [-KeyDescription <string>] [-KeyFriendlyName <string>] [-Container <string>] [-Provider <string>] 
+    [-CurveExport {None | CurveParameters | CurveName}] [-KeySpec {None | KeyExchange | Signature}] [-Type 
+    {Custom | CodeSigningCert | DocumentEncryptionCert | SSLServerAuthentication | 
+    DocumentEncryptionCertLegacyCsp}] [-FriendlyName <string>] [-NotAfter <datetime>] [-NotBefore 
+    <datetime>] [-SerialNumber <string>] [-Subject <string>] [-DnsName <string[]>] [-SuppressOid 
+    <string[]>] [-HashAlgorithm <string>] [-AlternateSignatureAlgorithm] [-TestRoot] [-Signer 
+    <Certificate>] [-CloneCert <Certificate>] [-CertStoreLocation <string>] [-WhatIf] [-Confirm]  
+    [<CommonParameters>]
+    
+
+ALIASES
+    None
+    
+
+REMARKS
+    Get-Help cannot find the Help files for this cmdlet on this computer. It is displaying only partial 
+    help.
+        -- To download and install Help files for the module that includes this cmdlet, use Update-Help.
+        -- To view the Help topic for this cmdlet online, type: "Get-Help New-SelfSignedCertificate 
+    -Online" or 
+           go to http://go.microsoft.com/fwlink/?LinkId=386828.
+
+
+
+
+PS R:\> 
